@@ -1,201 +1,210 @@
-	{
-		"info": {
-			"_postman_id": "40412ef8-bb83-4149-9d4c-67e1a860d9f4",
-			"name": "FYC",
-			"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-		},
-		"item": [
-			{
-				"name": "Authenticated",
-				"item": [
-					{
-						"name": "Run text treatment",
-						"request": {
-							"method": "POST",
-							"header": [],
-							"body": {
-								"mode": "raw",
-								"raw": "{\r\n    \"content\": \"yo\"\r\n}",
-								"options": {
-									"raw": {
-										"language": "json"
-									}
+{
+	"info": {
+		"_postman_id": "7d9c31d9-62a5-4b6e-9101-066e50f339a0",
+		"name": "FYC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authenticated",
+			"item": [
+				{
+					"name": "Run text treatment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"yo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							},
-							"url": {
-								"raw": "{{coreApi}}/texttreatment/",
-								"host": [
-									"{{coreApi}}"
-								],
-								"path": [
-									"texttreatment",
-									""
-								]
 							}
 						},
-						"response": []
-					},
-					{
-						"name": "Get me",
-						"request": {
-							"method": "GET",
-							"header": [],
-							"url": null
-						},
-						"response": []
-					},
-					{
-						"name": "Text treatment subscribe",
-						"protocolProfileBehavior": {
-							"disabledSystemHeaders": {
-								"accept": true
-							}
-						},
-						"request": {
-							"method": "GET",
-							"header": [
-								{
-									"key": "Accept",
-									"value": "application/octet-stream",
-									"type": "text"
-								}
+						"url": {
+							"raw": "{{coreApi}}/texttreatment/",
+							"host": [
+								"{{coreApi}}"
 							],
-							"url": {
-								"raw": "{{coreApi}}/sse-texttreatment",
-								"host": [
-									"{{coreApi}}"
-								],
-								"path": [
-									"sse-texttreatment"
-								]
-							}
-						},
-						"response": []
-					}
-				],
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"event": [
-					{
-						"listen": "prerequest",
-						"script": {
-							"type": "text/javascript",
-							"exec": [
-								"var authUrl = pm.environment.get(\"coreApi\");",
-								"var email= pm.environment.get(\"email\");",
-								"var password= pm.environment.get(\"password\");",
-								"const authReq = {",
-								"    url: `${authUrl}/users/authentication`,",
-								"    method: 'POST',",
-								"    header: {",
-								"        'Content-Type': 'application/json',",
-								"    },",
-								"    body: {",
-								"        mode: 'raw',",
-								"        raw: JSON.stringify({ email, password})",
-								"    }",
-								"}",
-								"",
-								"pm.sendRequest(authReq,(err, res) => {",
-								"    console.log(res.json());",
-								"    pm.environment.set(\"token\", res.json().token)",
-								"    console.log(err);",
-								"});"
-							]
-						}
-					},
-					{
-						"listen": "test",
-						"script": {
-							"type": "text/javascript",
-							"exec": [
+							"path": [
+								"texttreatment",
 								""
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get me",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{coreApi}}/users/me",
+							"host": [
+								"{{coreApi}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Text treatment subscribe",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/octet-stream",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{coreApi}}/sse-texttreatment",
+							"host": [
+								"{{coreApi}}"
+							],
+							"path": [
+								"sse-texttreatment"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
 					}
 				]
 			},
-			{
-				"name": "Create user",
-				"request": {
-					"method": "POST",
-					"header": [],
-					"body": {
-						"mode": "raw",
-						"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"username\": \"test\",\r\n    \"password\" : \"{{password}}\"\r\n}",
-						"options": {
-							"raw": {
-								"language": "json"
-							}
-						}
-					},
-					"url": {
-						"raw": "{{coreApi}}/users/registration",
-						"host": [
-							"{{coreApi}}"
-						],
-						"path": [
-							"users",
-							"registration"
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var authUrl = pm.environment.get(\"coreApi\");",
+							"var email= pm.environment.get(\"email\");",
+							"var password= pm.environment.get(\"password\");",
+							"const authReq = {",
+							"    url: `${authUrl}/users/authentication`,",
+							"    method: 'POST',",
+							"    header: {",
+							"        'Content-Type': 'application/json',",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ email, password})",
+							"    }",
+							"}",
+							"",
+							"pm.sendRequest(authReq,(err, res) => {",
+							"    console.log(res.json());",
+							"    pm.environment.set(\"token\", res.json().token)",
+							"    console.log(err);",
+							"});"
 						]
 					}
 				},
-				"response": []
-			},
-			{
-				"name": "Get token",
-				"request": {
-					"method": "POST",
-					"header": [],
-					"body": {
-						"mode": "raw",
-						"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
-						"options": {
-							"raw": {
-								"language": "json"
-							}
-						}
-					},
-					"url": {
-						"raw": "{{coreApi}}/users/authentication",
-						"host": [
-							"{{coreApi}}"
-						],
-						"path": [
-							"users",
-							"authentication"
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
 						]
 					}
+				}
+			]
+		},
+		{
+			"name": "Create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"username\": \"test\",\r\n    \"password\" : \"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
-				"response": []
-			}
-		],
-		"event": [
-			{
-				"listen": "prerequest",
-				"script": {
-					"type": "text/javascript",
-					"exec": [
-						""
+				"url": {
+					"raw": "{{coreApi}}/users/registration",
+					"host": [
+						"{{coreApi}}"
+					],
+					"path": [
+						"users",
+						"registration"
 					]
 				}
 			},
-			{
-				"listen": "test",
-				"script": {
-					"type": "text/javascript",
-					"exec": [
-						""
+			"response": []
+		},
+		{
+			"name": "Get token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{coreApi}}/users/authentication",
+					"host": [
+						"{{coreApi}}"
+					],
+					"path": [
+						"users",
+						"authentication"
 					]
 				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
 			}
-		]
-	}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
